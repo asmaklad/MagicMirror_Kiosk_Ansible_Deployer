@@ -1,0 +1,15 @@
+---
+- hosts: kiosk
+  roles:
+    - common
+    - kiosk
+  tasks:
+  - name: Show all the hosts in the inventory
+    ansible.builtin.debug:
+      msg: "{{ item }}"
+    loop: "{{ groups['all'] }}"
+
+  - name: Show all the hosts in the current play
+    ansible.builtin.debug:
+      msg: "{{ item }}"
+    loop: "{{ ansible_play_batch }}"

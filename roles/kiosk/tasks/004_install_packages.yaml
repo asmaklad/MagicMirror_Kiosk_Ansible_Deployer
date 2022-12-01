@@ -1,0 +1,10 @@
+---
+
+  - name: install xdotool stuff
+    become: true
+    apt:
+      pkg:
+        - xdotool
+        - unclutter
+        - sed
+

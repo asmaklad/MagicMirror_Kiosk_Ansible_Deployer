@@ -1,0 +1,69 @@
+- name: START {{role_name}}
+  debug:
+    msg: START {{role_name}}
+  tags:
+  - always
+
+- name: Gather facts
+  import_tasks: 000_gather_facts.yaml
+  tags: always
+
+- name: evaluate run_option refresh with no Tags declared
+  set_fact:
+    run_option: "K_refresh"
+
+- name: evaluate run_option delete
+  set_fact:
+    run_option: "K_delete"
+  tags: K_delete
+
+- name: evaluate run_option install
+  set_fact:
+    run_option: "K_install"
+  tags: K_install
+
+- name: evaluate run_option install if service file doesnt exists even when no K_install tag is declared
+  set_fact:
+    run_option: "K_install"
+  when: not kiosk_service_file_exists.stat.exists
+  tags: always
+
+- name: show the run_option
+  debug:
+    msg: "{{run_option}}"
+  tags: always
+
+- name: run when K_delete
+  when: (run_option == "K_delete")
+  import_tasks: 001_delete_kiosk.yaml
+  tags: always
+
+- name: run when not K_delete
+  when: (run_option != "K_delete")
+  tags: always
+  block:
+  - name: 004_install_packages.yaml
+    import_tasks: 004_install_packages.yaml
+    when: (run_option == "K_install")
+
+  - name: 002_copy_files.yaml
+    import_tasks: 002_copy_files.yaml
+
+  - name: 003_enable_service.yaml
+    import_tasks: 003_enable_service.yaml
+
+  - name: 005_add_crontabs.yaml
+    import_tasks: 005_add_crontabs.yaml
+
+
+- name: Reboot message
+  debug:
+    msg: "You Should manually Reboot"
+  tags:
+  - always
+
+- name: END {{role_name}}
+  debug:
+    msg: END {{role_name}}
+  tags:
+  - always

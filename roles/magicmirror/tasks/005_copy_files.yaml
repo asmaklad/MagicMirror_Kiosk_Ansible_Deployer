@@ -1,0 +1,29 @@
+---
+  - name: add MM aliases in .profile
+    lineinfile:
+      dest: /home/pi/.profile
+      line: '{{ item }}'
+    with_items:
+      - 'alias goMM="cd {{mm_root}}"'
+      - 'alias checkMM="pushd {{mm_root}} && npm run config:check && popd"'
+      - 'alias infoMM="pm2 info MagicMirror"'
+      - 'alias logMM="pm2 logs MagicMirror"'
+      - 'alias statMM="pm2 status"'
+      - 'alias envMM="pm2 env 0"'
+
+  - name: copy custom.css
+    copy:
+      src: './files/custom.css'
+      dest: "{{ mm_root }}/css/custom.css"
+
+  - name: Create sounds Directory
+    file:
+      path: "{{ mm_root }}/sounds"
+      state: directory
+      mode: u=rwx,g=rx,o=rx
+
+  - name: copy sounds Directory
+    copy:
+      src: './files/sounds/'
+      dest: "{{ mm_root }}/sounds/"
+      mode: u=rwx,g=rx,o=rx

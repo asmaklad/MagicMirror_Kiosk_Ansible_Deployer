@@ -1,0 +1,5 @@
+---
+  - name: check if Magic Mirror is already installed
+    stat:
+      path: /lib/systemd/system/kiosk.service
+    register: kiosk_service_file_exists

@@ -1,0 +1,24 @@
+---
+  - name: Install Modules
+    include_tasks: ./library/install_module.yaml
+    when: item.github is defined
+    with_items: "{{ modules }}"
+
+  - name: fix adhan omxplayer issue by surrogating the omxplayer with a shell script
+    become: true
+    copy:
+      src: './files/omxplayer.sh'
+      dest: /usr/bin/omxplayer
+      mode: u=rx,g=rx,o=rx
+
+  - name: Magic Mirror Config.js
+    template:
+      src: './templates/config.js.j2'
+      dest: "{{ mm_root }}/config/config.js"
+
+  - name: check config.js file
+    shell: "cd {{ mm_root }} && npm run config:check"
+    notify:
+      - restart MM
+
+

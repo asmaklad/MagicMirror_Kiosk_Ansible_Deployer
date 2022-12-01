@@ -1,0 +1,26 @@
+---
+
+  - name: copy the kiosk.sh file
+    template:
+      src:  templates/kiosk.sh.j2
+      dest: ~/kiosk.sh
+      mode: u=rx,g=-rx,o=-rx
+
+  - name: copy the switch_screen_off.sh file
+    template:
+      src:  files/switch_screen_off.sh
+      dest: ~/switch_screen_off.sh
+      mode: u=rx,g=-rx,o=-rx
+
+  - name: copy the switch_screen_on.sh file
+    template:
+      src:  files/switch_screen_on.sh
+      dest: ~/switch_screen_on.sh
+      mode: u=rx,g=-rx,o=-rx
+
+  - name: copy the kiosk.service file
+    become: true
+    copy:
+      src:  files/kiosk.service
+      dest: /lib/systemd/system/kiosk.service
+      mode: u=rx,g=rx,o=-rx

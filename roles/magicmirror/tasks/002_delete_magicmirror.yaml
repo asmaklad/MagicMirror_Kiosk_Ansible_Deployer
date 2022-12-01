@@ -1,0 +1,60 @@
+---
+  - name: npm uninstall MagicMirror
+    npm:
+      path: "{{ mm_root }}"
+      name: MagicMirror
+      state: absent
+
+  - name: Delete magicMirror, if exists
+    command:
+      cmd: pm2 remove MagicMirror
+      creates: "{{ mm_root }}"
+
+  - name: pm2 kill
+    command:
+      cmd: pm2 kill
+
+  - name: sudo npm remove pm2
+    become: true
+    npm:
+      name: pm2
+      global: yes
+      state: absent
+
+  - name: pm2 service disable
+    become: true
+    service:
+      name: pm2-pi
+      state: stopped
+      enabled: false
+
+  - name: delete the MagicMirror directory
+    become: true
+    file:
+      path: "{{ mm_root }}"
+      state: absent
+
+  - name: host specific cronjobs
+    # source ./hosts_vars/<hostname>/crontabs.yaml
+    ansible.builtin.cron:
+      name: "{{item.name}}"
+      state: absent
+    loop: "{{ hostc.crontabs }}"
+    when:
+    - hostc is defined
+    - hostc.crontabs is defined
+
+  - name: group specific cronjobs
+    ansible.builtin.cron:
+      name: "{{item.name}}"
+      state: absent
+    with_items: "{{ groupc.crontabs }}"
+    when:
+    - groupc is defined
+    - groupc.crontabs is defined
+
+  - name: UnInstall nodeJs
+    become: true
+    apt:
+      pkg: nodejs
+      state: absent

@@ -1,0 +1,11 @@
+---
+# handlers are only fired when certain tasks report changes, and are run at the end of each play:
+- name: restart ntpd
+  service:
+    name: ntpd
+    state: restarted
+  ignore_errors: true
+
+- name: restart MM
+  shell: "cd {{ mm_root }} && pm2 restart MagicMirror"
+  ignore_errors: true

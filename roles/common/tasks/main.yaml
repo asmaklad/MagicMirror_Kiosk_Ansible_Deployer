@@ -1,0 +1,20 @@
+---
+#tasks file for common
+- name: START {{role_name}}
+  debug:
+    msg: START {{role_name}}
+
+- name: 001_install_pkgs.yaml
+  import_tasks: 001_install_pkgs.yaml
+
+- name: 002_adjust_env.yaml
+  import_tasks:  002_adjust_env.yaml
+
+- name: 100_ntp.yaml
+  import_tasks:  100_ntp.yaml
+  tags:
+    - never
+
+- name: END {{role_name}}
+  debug:
+    msg: END {{role_name}}

@@ -1,0 +1,119 @@
+/* Some ideas based on a YT tutorial https://www.youtube.com/watch?v=OXpJylI3rG */
+
+body {
+	border-radius: 0px;
+	border-color: red;
+	padding: 0px;	
+	margin: 0px;
+	color: blue;
+	position: absolute;
+	height: calc(100% - 100px);
+	width: calc(100% - 100px);
+	font-family: "Roboto Condensed", sans-serif;
+	font-weight: 400;
+	font-size: 200%;
+	line-height: 1.5em;
+	-webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Change the background and forground colours throughout the modules so that each is displayed in
+ * a white semi-transparent panel with dark lettering.
+ */
+
+.module {
+  border-radius: 10px;
+  padding: 0px;
+  color: red;
+}
+
+.module.clock {    
+  color: red;
+  border-radius: 5px;
+  padding: 0px;
+  padding-top: 5px;
+}
+
+.module.alert {
+  color: rgba(255, 127, 0, 0.6);
+}
+
+.module.updatenotification {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.calendar .symbol {
+	padding-left: 0;
+	padding-right: 10px;
+	font-size: 80%;
+	vertical-align: top;
+	text-align: left;
+}
+
+.calendar .symbol span {
+	display: inline-block;
+	-ms-transform: translate(0, 2px); /* IE 9 */
+	-webkit-transform: translate(0, 2px); /* Safari */
+	transform: translate(0, 2px);
+	text-align: left;
+}
+
+.calendar .title {
+	padding-left: 0;
+	padding-right: 0;
+	font-size: 80%;
+	text-align: left;
+}
+
+.calendar .time {
+	padding-left: 0px;
+	text-align: left;
+	font-size: 80%;
+	vertical-align: top;
+}
+
+.calendar {
+	/*width: 375px;*/
+  /*width: calc(30% - 100px);*/
+	font-size: 2em;
+	line-height: 2.5em;
+}
+
+.flight-tracker {
+	font-size: 1em;
+	line-height: 2.5em;
+}
+/*
+vim: set syntax=css ts=8 sw=4 ai et tw=100 fo=tcrqn21:
+*/
+
+.wi-day-sunny {
+	color: #ffff00;
+}
+
+.xsmall {
+	font-size: 35px;
+	line-height: 40px;
+}
+
+.small {
+	font-size: 40px;
+	line-height: 45px;
+}
+
+.medium {
+	font-size: 50px;
+	line-height: 55px;
+}
+
+.large {
+	font-size: 85px;
+	line-height: 85px;
+}
+
+.xlarge {
+	font-size: 95px;
+	line-height: 95px;
+	letter-spacing: -5px;
+}
+

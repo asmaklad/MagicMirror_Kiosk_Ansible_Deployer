@@ -1,0 +1,81 @@
+- name: START {{role_name}}
+  debug:
+    msg: START {{role_name}}
+  tags:
+  - always
+
+- name: 001_gather_facts.yaml
+  import_tasks: 001_gather_facts.yaml
+  tags: always
+
+- name: evaluate run_option refresh with no Tags declared
+  set_fact:
+    run_option: "MM_refresh"
+  tags: always
+
+- name: evaluate run_option delete
+  set_fact:
+    run_option: "MM_delete"
+  tags: MM_delete
+
+- name: evaluate run_option install
+  set_fact:
+    run_option: "MM_install"
+  tags: MM_install
+
+- name: install mm if mm_root doesnt exists and even if no MM_install tag
+  set_fact:
+    run_option: "MM_install"
+  when: not mm_root_exists.stat.exists
+  tags: always
+
+- name: evaluate run_option upgrade
+  set_fact:
+    run_option: "MM_upgrade"
+  tags: MM_update
+
+- name: show the run_option
+  debug:
+    msg: "{{run_option}}"
+  tags: always
+
+- name: 002_delete_magicmirror.yaml
+  import_tasks: 002_delete_magicmirror.yaml
+  ignore_errors: true
+  when: (run_option == "MM_delete")
+  tags: always
+
+- name: 003_mm_install.yaml
+  import_tasks: 003_mm_install.yaml
+  when: (run_option == "MM_install")
+  tags: always
+
+- name: 004_upgrade_mm_scripted.yaml
+  import_tasks: 004_upgrade_mm_scripted.yaml
+  when: (run_option == "MM_upgrade")
+  tags: always
+
+- name: run when not MM_delete
+  when: (run_option != "MM_delete")
+  tags: always
+  block:
+    - name: 005_copy_files.yaml
+      import_tasks: 005_copy_files.yaml
+
+    - name: 006_install_modules.yaml
+      import_tasks: 006_install_modules.yaml
+
+    - name: 007_add_crontabs.yaml
+      import_tasks: 007_add_crontabs.yaml
+
+- name: Reboot message
+  debug:
+    msg: "You Should manually Reboot"
+  tags:
+  - always
+
+- name: END {{role_name}}
+  debug:
+    msg: END {{role_name}}
+  tags:
+  - always

@@ -1,0 +1,5 @@
+---
+  - name: check if Magic Mirror is already installed
+    stat:
+      path: "{{ mm_root }}"
+    register: mm_root_exists

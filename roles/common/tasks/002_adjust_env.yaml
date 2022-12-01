@@ -1,0 +1,21 @@
+---
+  - name: add aliases in .profile
+    lineinfile:
+      dest: /home/pi/.profile
+      line: '{{ item }}'
+    with_items:
+      - 'alias ll="ls -ltr"'
+
+  - name: disable Bluetooth HW
+    become: true
+    lineinfile:
+      dest: /boot/config.txt
+      line: "dtoverlay=pi3-disable-bt"
+
+  - name: disable Bluetooth SERVICE
+    become: true
+    ansible.builtin.systemd:
+      name: hciuart
+      enabled: no
+      state: stopped
+

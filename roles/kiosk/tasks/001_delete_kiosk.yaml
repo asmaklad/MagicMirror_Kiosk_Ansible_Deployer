@@ -1,0 +1,45 @@
+---
+
+  - name: remove xdotool stuff
+    become: true
+    apt:
+      pkg:
+        - xdotool
+        - unclutter
+      state: absent
+
+  - name: remove the kiosk.sh file
+    file:
+      path: ~/kiosk.sh
+      state: absent
+
+  - name: stop, disbale the kiosk service
+    become: true
+    service:
+      name: kiosk.service
+      enabled: false
+      state: stopped
+
+  - name: remove the kiosk.service file
+    become: true
+    file:
+      path: /lib/systemd/system/kiosk.service
+      state: absent
+
+  - name: delete host specific cronjobs
+    # source ./hosts_vars/<hostname>/crontabs.yaml
+    ansible.builtin.cron:
+      "{{item}} | combine( { state: absent } )  "
+    loop:
+      "{{ hostc.crontabs }}"
+    when:
+      - hostc is defined
+      - hostc.crontabs is defined
+
+  - name: delete group specific cronjobs
+    ansible.builtin.cron:
+      "{{item}} | combine( { state: absent } )  "
+    with_items: "{{ groupc.crontabs }}"
+    when:
+      - groupc is defined
+      - groupc.crontabs is defined

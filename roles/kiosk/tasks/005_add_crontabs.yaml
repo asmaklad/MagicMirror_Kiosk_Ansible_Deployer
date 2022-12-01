@@ -1,0 +1,26 @@
+---
+  - name: check hostc crontabs
+    debug:
+      msg: "{{hostc}}"
+
+  - name: check hostc.crontabs crontabs
+    debug:
+      msg: "{{ hostc.crontabs }}"
+
+  - name: host specific cronjobs
+    # source ./hosts_vars/<hostname>/crontabs.yaml
+    ansible.builtin.cron:
+      "{{item}}"
+    loop:
+      "{{ hostc.crontabs }}"
+    when:
+      - hostc is defined
+      - hostc.crontabs is defined
+
+  - name: group specific cronjobs
+    ansible.builtin.cron:
+      "{{item}}"
+    with_items: "{{ group.crontabs }}"
+    when:
+      - group is defined
+      - group.crontabs is defined

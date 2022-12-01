@@ -1,0 +1,41 @@
+---
+  - name: add node repo
+    shell:
+      cmd: curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+
+  - name: install node
+    become: true
+    apt:
+      pkg: nodejs
+
+  - name: Create Install Directory
+    file:
+      path: "{{ mm_root }}"
+      state: directory
+
+  - name: Clone Magic Mirror
+    git:
+      repo: https://github.com/MichMich/MagicMirror
+      dest: "{{ mm_root }}"
+      version: "{{ mm_default_version }}"
+      force: yes
+
+  - name: NPM Install
+    npm:
+      path: "{{ mm_root }}"
+
+  - name: npm run install-mm
+    npm:
+      path: "{{ mm_root }}/install-mm"
+
+  - name: Install MagicMirror scripted
+    shell:
+      cmd: bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/raspberry.sh)"
+
+  - name: Turn off screen saver
+    shell:
+      cmd: bash -c "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/screensaveroff.sh)"
+
+  - name: add using pm2 to autostart MagicMirror at bootup
+    shell:
+      cmd: bash -c "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/fixuppm2.sh)"
