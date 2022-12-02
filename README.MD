@@ -11,16 +11,16 @@
   - [The roles:](#the-roles)
   - [The Tags](#the-tags)
   - [Reorganize the folders to match the best practices](#reorganize-the-folders-to-match-the-best-practices)
-- [where to start:](#where-to-start)
+- [Where to start:](#where-to-start)
 - [Running the playbooks](#running-the-playbooks)
   - [Calling adhoc modules (to test connectivity)](#calling-adhoc-modules-to-test-connectivity)
   - [To install all roles on all hosts:](#to-install-all-roles-on-all-hosts)
     - [To install all magicmirrors:](#to-install-all-magicmirrors)
   - [To install all kiosks:](#to-install-all-kiosks)
-  - [to upgrade magicmirrors:](#to-upgrade-magicmirrors)
+  - [To upgrade magicmirrors:](#to-upgrade-magicmirrors)
   - [To install the magic mirror only on one host](#to-install-the-magic-mirror-only-on-one-host)
   - [To delete the magic mirror onyl on one host](#to-delete-the-magic-mirror-onyl-on-one-host)
-  - [integrate two methods of installtion as mentioned in the Magic Mirror documentation:](#integrate-two-methods-of-installtion-as-mentioned-in-the-magic-mirror-documentation)
+  - [Integrate two methods of installtion as mentioned in the Magic Mirror documentation:](#integrate-two-methods-of-installtion-as-mentioned-in-the-magic-mirror-documentation)
   - [Auotmate the manual installation method](#auotmate-the-manual-installation-method)
     - [Use the scripted approach:](#use-the-scripted-approach)
     - [Upgrade Magic Mirror:](#upgrade-magic-mirror)
@@ -157,26 +157,27 @@ roles/
 
 ```
 
-# where to start:
+# Where to start:
   Start by adjusting the following files for your needs:
-  1) hosts.yaml : this is your inventory file, describe here the ip's of you magicmirror and kiosk installtions.
-  1) /host_vars/<host_name_from the inventory file>/modules.yaml : Adjust the list of modules you want to install
-  1) /host_vars/<host_name_from the inventory file>/vault.yaml : Adjust the secrests, like your ical link, openweathermap API key ..etc, prefix your variables with a "vault_" prefix.
-  1) /host_vars/<host_name_from the inventory file>/vars.yaml : add more variables specific to this host and any variable you already added in the vault without the "vault_" prefix (just look at the examples in the file)
-  1) /host_vars/<host_name_from the inventory file>/crontabs.yaml : add your list of crontab jobs here : like DingDong every hour or switch screen on between 7:00 and 19:00 or increase the Audio volumes in the same period ..etc
+  1) hosts.yaml : this is your inventory file, describe here the ip's of you magicmirror and kiosk hosts.
+  1) /host_vars/<host_name_from the inventory file>/modules.yaml : Adjust the list of MagicMirror modules you want to install
+  1) /host_vars/<host_name_from the inventory file>/vault.yaml : Adjust the secrets, like your iCal link, openweathermap API key ..etc, prefix your variables with a "vault_" prefix <code>vault_var123: mySecretStringOrObject</code>.
+   Please note this file could be encrypted with <code>ansible-vault encrypt \<path>/vault.yaml </code>
+  2) /host_vars/<host_name_from the inventory file>/vars.yaml : add more variables specific to this host and any variable you already added in the vault without the "vault_" prefix (just look at the examples in the file <code>var123: "{{vault_var123}}"</code>)
+  3) /host_vars/<host_name_from the inventory file>/crontabs.yaml : add your list of crontab jobs here : like DingDong every hour or switch screen on between 7:00 and 19:00 or increase the Audio volumes in the same period ..etc
+
+> Please note all these files are added to .gitignore so they are not checking into github.
 # Running the playbooks
 
 ## Calling adhoc modules (to test connectivity)
-<code>
-ansible magicmirror -i hosts.yaml  -m ping
-</code>
-<code>
-ansible magicmirror -i hosts.yaml  -m command -a '/sbin/reboot'
-</code>
+* <code>ansible magicmirror -i hosts.yaml  -m ping</code>
+* <code>ansible magicmirror -i hosts.yaml  -m command -a '/sbin/reboot'</code>
 
 ## To install all roles on all hosts:
-* if ~/MagicMirror doesn't already exists, it will be install first. (implicit MM_install)
-* if kiosk.service file is not found in its place, the K_install will be implicitly invoked.
+> if ~/MagicMirror doesn't already exists, it will be install first. (implicit MM_install)
+
+> if kiosk.service file is not found in its place, the K_install will be implicitly invoked.
+> 
 <code>ansible-playbook site.yaml -i hosts.yaml </code>
 
 ### To install all magicmirrors:
@@ -188,9 +189,11 @@ OR
 <code>ansible-playbook site.yaml -i hosts.yaml --limit kiosk --tags "K_install"</code>
 
 
-## to upgrade magicmirrors:
+## To upgrade magicmirrors:
 <code>ansible-playbook site.yaml -i hosts.yaml --limit magicmirrors --tags "MM_upgrade"</code>
+
 OR
+
 <code>ansible-playbook magicmirror.yaml -i hosts.yaml --tags "MM_upgrade"</code>
 
 ## To install the magic mirror only on one host
@@ -199,10 +202,11 @@ OR
 ## To delete the magic mirror onyl on one host
 <code>ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.local --tags "MM_delete"</code>
 
-Please notice, that this delete procedure is not yet clean, it needs more work. (please be my guest in finalizing it or just reformat the SD card)
-Then you have to readjust the hosts.yaml file and remove that host for the "magicmirror" group
+> Please notice, that this delete procedure is not yet clean, it needs more work. (please be my guest in finalizing it or just reformat the SD card)
 
-## integrate two methods of installtion as mentioned in the Magic Mirror documentation:
+> You have to readjust the hosts.yaml file and remove that host for the "magicmirror" group
+
+## Integrate two methods of installtion as mentioned in the Magic Mirror documentation:
 
 ## Auotmate the manual installation method
 https://docs.magicmirror.builders/getting-started/installation.html#manual-installation
