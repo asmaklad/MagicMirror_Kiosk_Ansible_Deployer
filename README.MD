@@ -45,29 +45,38 @@ https://docs.ansible.com/ansible/2.8/user_guide/playbooks_best_practices.html#to
 
 5) introduce the KIOSK role, where a RPI acts as a multi-tab-browser in kiosk mode, rotating the displayed tab every 15 seconds. one of those tabs could be displaying the MagicMirror webpage from the MagicMirror RPI.
 
-## The Setup
+6) control the crontab jobs on the hosts,Examples:
+  * DingDonng every hour (requires a connected speaker or HDMI Audio enabled screen)
+  * Increase volume of the Audio output between 7:00 and 19:00 
+  * Switch screen on only between 7:00 and 19:00
+  * ..etc
 
-### Design Assumptions :
+# The Setup
+
+## Design Assumptions :
 * Two RPI : as descibed here: hosts.yaml
   * magicmirror-livingroom.local
-  * magicmirror-workshop.local
+  * magicmirror-workshop.local (commented out)
+  * kiosk-workshop.local
 * One will have a Magic Mirror installtion and another will run in KIOSK mode, where it will run a browser that iterates between differnt webpages every 15 seconds. One of those web pages is the magicmirror.
 * Two Ansible Groups/Roles :
   * magicmirror : has 1 RPI (you could add more if you like)
   * kiosk       : The other RPI (you could add more if you like)
 
-Each installation of Magicmirror will have differnt set of modules on each one.
+Each installation of Magicmirror will have differnt set of modules running on each one.
 
-### The roles:
+## The roles:
 1) common     : this will run on all RPI's
 2) magicmirror: this will run on each magic mirror
-3) kiosk      : this will run on each piHole 
+3) kiosk      : this will run on each kiosk 
 
 Group By Roles:
 This allows playbooks to target machines based on role, as well as to assign role specific variables using the group variable system.
 
-### The Tags
-the playbooks utlizes the Ansible tags feature.
+## The Tags
+The playbooks utlizes the Ansible tags feature.
+* if the ~MagicMirror directory or the kiosk service file are not existing, the MM_install and K_install Tags are implecitly invoked.
+* if no Tags where specified , then a MM_Refresh is assumed, and just redeploying the MM Modules, files , Templates is carried out.
 
 Role: magicmirror
   Can be found in this file: roles\magicmirror\tasks\main.yaml
@@ -91,11 +100,26 @@ The Directory Layout as follows:
 hosts.yaml                # inventory file of magic Mirrors in the House
 
 group_vars/
-   magicmirror.yaml  # so far we have only one group: "magicmirror"
-   pihole.yaml       # a place holder
+   magicmirror  # so far we have only one group: "magicmirror"
+    vars.yaml
+    vault.yaml
+   kiosk        # a place holder
+    vars.yaml
+    vault.yaml
 host_vars/
-   magicmirror_living.yaml          # here we assign variables to magicmirror_living
-   magicmirror_workshop.yaml        # here we assign variables to magicmirror_workshop
+   magicmirror_living          # here we assign variables to magicmirror_living
+    vars.yaml
+    vault.yaml
+    modules.yaml
+    crontabs.yaml
+   magicmirror_workshop        # here we assign variables to magicmirror_workshop (commented out)
+    vars.yaml
+    vault.yaml
+    modules.yaml
+    crontabs.yaml
+   kiosk_workshop              # here we assign variables to kiosk_workshop
+    vars.yaml
+    vault.yaml
 
 library/                  # if any custom modules, put them here (optional)
 module_utils/             # if any custom module_utils to support modules, put them here (optional)
@@ -103,7 +127,7 @@ filter_plugins/           # if any custom filter plugins, put them here (optiona
 
 site.yaml                  # master playbook
 magicmirror.yaml           # playbook for webserver tier
-pihole.yaml                # playbook for dbserver tier
+kiosk.yaml                # playbook for dbserver tier
 
 roles/
     common/               # this hierarchy represents a "role"
@@ -127,18 +151,34 @@ roles/
         lookup_plugins/   # or other types of plugins, like lookup in this case
 
     magicmirror/         # same kind of structure as "common" was above, done for the webtier role
+      ...
     kiosk/               # same kind of structure as "common" was above, done for the webtier role
+      ...
 
 ```
 
-## running the playbooks
+# where to start:
+  start by adjusting the following files for your needs:
+  1) hosts.yaml : this is your inventory file, describe here the ip's of you magicmirror and kiosk installtions.
+  1) /host_vars/<host_name_from the inventory file>/modules.yaml : Adjust the list of modules you want to install
+  1) /host_vars/<host_name_from the inventory file>/vault.yaml : Adjust the secrests, like your ical link, openweathermap API key ..etc, prefix your variables with a "vault_" prefix.
+  1) /host_vars/<host_name_from the inventory file>/vault.yaml : add more variables specific to this host and anyvariable you already added in the vault without the "vault_" prefix (just look at the examples in the file)
+  1) /host_vars/<host_name_from the inventory file>/crontabs.yaml : add your list of crontab jobs here : like DingDong every hour or switch screen on between 7:00 and 19:00 or increase the Audio volumes in the same period ..etc
+# running the playbooks
 
-### Calling adhoc modules (to test connectivity)
-<code>ansible magicmirror -i hosts.yaml  -m ping
+## Calling adhoc modules (to test connectivity)
+<code>
+ansible magicmirror -i hosts.yaml  -m ping
+</code>
+<code>
 ansible magicmirror -i hosts.yaml  -m command -a '/sbin/reboot'
 </code>
 
-### To install all roles on all hosts:
+
+
+## To install all roles on all hosts:
+* if ~/MagicMirror doesn't already exists, it will be install first. (implicit MM_install)
+* if kiosk.service file is not found in its place, the K_install will be implicitly invoked.
 <code>ansible-playbook site.yaml -i hosts.yaml </code>
 
 ### to install all magicmirrors:
@@ -148,34 +188,34 @@ OR
 
 <code>ansible-playbook magicmirror.yaml   -i hosts.yaml   --tags "MM_install"    --limit magicmirror</code>
 
-### to install all kiosks:
+## to install all kiosks:
 <code>ansible-playbook site.yaml -i hosts.yaml --limit kiosk --tags "K_install"</code>
 
 
-### to upgrade magicmirrors:
+## to upgrade magicmirrors:
 <code>ansible-playbook site.yaml -i hosts.yaml --limit magicmirrors --tags "MM_upgrade"</code>
 
 OR
 
 <code>ansible-playbook magicmirror.yaml -i hosts.yaml --tags "MM_upgrade"</code>
 
-### to install the magic mirror onyl on one host
+## to install the magic mirror onyl on one host
 <code>ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.local --tags "MM_install"</code>
 
-### to delete the magic mirror onyl on one host
+## to delete the magic mirror onyl on one host
 <code>ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.local --tags "MM_delete"</code>
 
 Then you have to readjust the hosts.yaml file and remove that host for the "magicmirror" group
 
 ## Introduce more modular approach to be able to manage more than one magic mirror.
 
-## integrate two methods of isnatlltions as mentioned in the Magic Mirror documentation:
+## integrate two methods of installtion as mentioned in the Magic Mirror documentation:
 
-### Auotmate the manual installation method
+## Auotmate the manual installation method
 https://docs.magicmirror.builders/getting-started/installation.html#manual-installation
 
 ### Use the scripted approach:
 https://github.com/sdetweil/MagicMirror_scripts
 
-## Upgrade Magic Mirror:
+### Upgrade Magic Mirror:
    1) https://github.com/sdetweil/MagicMirror_scripts
