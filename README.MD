@@ -6,24 +6,25 @@
 
 - [TOC](#toc)
 - [Introduction](#introduction)
-  - [The Setup](#the-setup)
-    - [Design Assumptions :](#design-assumptions-)
-    - [The roles:](#the-roles)
-    - [The Tags](#the-tags)
+- [The Setup](#the-setup)
+  - [Design Assumptions :](#design-assumptions-)
+  - [The roles:](#the-roles)
+  - [The Tags](#the-tags)
   - [Reorganize the folders to match the best practices](#reorganize-the-folders-to-match-the-best-practices)
-  - [running the playbooks](#running-the-playbooks)
-    - [Calling adhoc modules (to test connectivity)](#calling-adhoc-modules-to-test-connectivity)
-    - [To install all roles on all hosts:](#to-install-all-roles-on-all-hosts)
+- [where to start:](#where-to-start)
+- [running the playbooks](#running-the-playbooks)
+  - [Calling adhoc modules (to test connectivity)](#calling-adhoc-modules-to-test-connectivity)
+  - [To install all roles on all hosts:](#to-install-all-roles-on-all-hosts)
     - [to install all magicmirrors:](#to-install-all-magicmirrors)
-    - [to install all kiosks:](#to-install-all-kiosks)
-    - [to upgrade magicmirrors:](#to-upgrade-magicmirrors)
-    - [to install the magic mirror onyl on one host](#to-install-the-magic-mirror-onyl-on-one-host)
-    - [to delete the magic mirror onyl on one host](#to-delete-the-magic-mirror-onyl-on-one-host)
+  - [to install all kiosks:](#to-install-all-kiosks)
+  - [to upgrade magicmirrors:](#to-upgrade-magicmirrors)
+  - [to install the magic mirror onyl on one host](#to-install-the-magic-mirror-onyl-on-one-host)
+  - [to delete the magic mirror onyl on one host](#to-delete-the-magic-mirror-onyl-on-one-host)
   - [Introduce more modular approach to be able to manage more than one magic mirror.](#introduce-more-modular-approach-to-be-able-to-manage-more-than-one-magic-mirror)
-  - [integrate two methods of isnatlltions as mentioned in the Magic Mirror documentation:](#integrate-two-methods-of-isnatlltions-as-mentioned-in-the-magic-mirror-documentation)
-    - [Auotmate the manual installation method](#auotmate-the-manual-installation-method)
+  - [integrate two methods of installtion as mentioned in the Magic Mirror documentation:](#integrate-two-methods-of-installtion-as-mentioned-in-the-magic-mirror-documentation)
+  - [Auotmate the manual installation method](#auotmate-the-manual-installation-method)
     - [Use the scripted approach:](#use-the-scripted-approach)
-  - [Upgrade Magic Mirror:](#upgrade-magic-mirror)
+    - [Upgrade Magic Mirror:](#upgrade-magic-mirror)
 
 <!-- /code_chunk_output -->
 
@@ -158,11 +159,11 @@ roles/
 ```
 
 # where to start:
-  start by adjusting the following files for your needs:
+  Start by adjusting the following files for your needs:
   1) hosts.yaml : this is your inventory file, describe here the ip's of you magicmirror and kiosk installtions.
   1) /host_vars/<host_name_from the inventory file>/modules.yaml : Adjust the list of modules you want to install
   1) /host_vars/<host_name_from the inventory file>/vault.yaml : Adjust the secrests, like your ical link, openweathermap API key ..etc, prefix your variables with a "vault_" prefix.
-  1) /host_vars/<host_name_from the inventory file>/vault.yaml : add more variables specific to this host and anyvariable you already added in the vault without the "vault_" prefix (just look at the examples in the file)
+  1) /host_vars/<host_name_from the inventory file>/vars.yaml : add more variables specific to this host and any variable you already added in the vault without the "vault_" prefix (just look at the examples in the file)
   1) /host_vars/<host_name_from the inventory file>/crontabs.yaml : add your list of crontab jobs here : like DingDong every hour or switch screen on between 7:00 and 19:00 or increase the Audio volumes in the same period ..etc
 # running the playbooks
 
