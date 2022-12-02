@@ -1,9 +1,0 @@
-calendar_1_url: "{{vault_calendar_1_url}}"
-calendar_2_url: "{{vault_calendar_2_url}}"
-openweathermap: {{vault_openweathermap}}
-telegram: {{vault_telegram}}
-location: {{vault_location}}
-
-magicmirror_workshop: {{vault_magicmirror_workshop}}
-ansible_user: {{vault_magicmirror_workshop.ansible_user}}
-ansible_password: {{vault_magicmirror_workshop.ansible_password}}

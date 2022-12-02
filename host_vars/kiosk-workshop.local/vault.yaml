@@ -1,5 +1,0 @@
-
-
-vault_kiosk_workshop:
-  ansible_user: pi
-  ansible_password: mypassword
