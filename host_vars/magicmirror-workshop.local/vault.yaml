@@ -1,0 +1,22 @@
+vault_calendar_1_url: 'https://calendar.google.com/calendar/ical/XXXX%40gmail.com/private-XXXX/basic.ics'
+vault_calendar_2_url: 'https://calendar.google.com/calendar/ical/YYYY%40gmail.com/private-XXXX7XXXXX/basic.ics'
+vault_openweathermap:
+  apiKey: 'XXXXXXXXXXXXXXXXXXXXXXXXX'
+vault_telegram:
+    telegramAPIKey : 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX'
+    allowedUser :
+      - 'userXXXXXXX'
+      - 'userYYYYYYY'
+    adminChatId : XXXXXXXX
+    telecast: '-XXXXXXXXX'
+vault_location:
+  lat: "XX.YYYYY"
+  lon: "YY.XXXXX"
+  name: "CITY,CC"
+  locationID: "XXXXXXXX"
+  timezone: "YYYYYYY/CITY"
+
+
+vault_magicmirror_living:
+  ansible_user: pi
+  ansible_password: mypassword
