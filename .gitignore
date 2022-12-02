@@ -3,3 +3,4 @@
 **/crontabs.yaml
 **/vars.yaml
 /hosts.yaml
+/host_vars/magicmirror-living.local/vault.yaml
