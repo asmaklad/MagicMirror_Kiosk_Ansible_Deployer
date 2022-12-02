@@ -10,7 +10,7 @@ vault_telegram:
     adminChatId : XXXXXXXX
     telecast: '-XXXXXXXXX'
 vault_location:
-  lat: "XX.YYYYX"
+  lat: "XX.YYYYY"
   lon: "YY.XXXXX"
   name: "CITY,CC"
   locationID: "XXXXXXXX"
