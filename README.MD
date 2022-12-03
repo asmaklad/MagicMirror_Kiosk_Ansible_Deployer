@@ -158,13 +158,15 @@ roles/
 ```
 
 # Where to start:
-  Start by adjusting the following files for your needs: (also rename the .yaml.sample to .yaml)
+  Start by adjusting the following files for your needs: (also copy the .yaml.sample to .yaml)
   1) hosts.yaml : this is your inventory file, describe here the ip's of you magicmirror and kiosk hosts.
-  1) /host_vars/<host_name_from the inventory file>/modules.yaml : Adjust the list of MagicMirror modules you want to install
-  1) /host_vars/<host_name_from the inventory file>/vault.yaml : Adjust the secrets, like your iCal link, openweathermap API key ..etc, prefix your variables with a "vault_" prefix <code>vault_var123: mySecretStringOrObject</code>.
+  2) /group_vars/<group_name>/vars.yaml     : this file has the variable holding the directory to install the MagiMirror
+  2) /group_vars/<group_name>/vault.yaml    : a place holder
+  3) /host_vars/<host_name_from the inventory file>/modules.yaml : Adjust the list of MagicMirror modules you want to install
+  4) /host_vars/<host_name_from the inventory file>/vault.yaml : Adjust the secrets, like your iCal link, openweathermap API key ..etc, prefix your variables with a "vault_" prefix <code>vault_var123: mySecretStringOrObject</code>.
    Please note this file could be encrypted with <code>ansible-vault encrypt \<path>/vault.yaml </code>
-  2) /host_vars/<host_name_from the inventory file>/vars.yaml : add more variables specific to this host and any variable you already added in the vault without the "vault_" prefix (just look at the examples in the file <code>var123: "{{vault_var123}}"</code>)
-  3) /host_vars/<host_name_from the inventory file>/crontabs.yaml : add your list of crontab jobs here : like DingDong every hour or switch screen on between 7:00 and 19:00 or increase the Audio volumes in the same period ..etc
+  5) /host_vars/<host_name_from the inventory file>/vars.yaml : add more variables specific to this host and any variable you already added in the vault without the "vault_" prefix (just look at the examples in the file <code>var123: "{{vault_var123}}"</code>)
+  6) /host_vars/<host_name_from the inventory file>/crontabs.yaml : add your list of crontab jobs here : like DingDong every hour or switch screen on between 7:00 and 19:00 or increase the Audio volumes in the same period ..etc
 
 > Please note all these files are added to .gitignore so they are not checking into github.
 # Running the playbooks
