@@ -204,7 +204,7 @@ OR
 
 > Please notice, that this delete procedure is not yet clean, it needs more work. (please be my guest in finalizing it or just reformat the SD card)
 
-> You have to readjust the hosts.yaml file and remove that host for the "magicmirror" group
+> You have to readjust the hosts.yaml file and remove that host from the "magicmirror" group
 
 # Integrate two methods of installtion as mentioned in the Magic Mirror documentation:
 
