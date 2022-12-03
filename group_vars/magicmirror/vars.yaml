@@ -1,4 +1,0 @@
-param1: "{{vault_param1}}"
-
-mm_root: '/home/pi/MagicMirror' # root install directory
-mm_default_version: master
