@@ -1,5 +1,5 @@
 **/vault.yaml
-**/module.yaml
+**/modules.yaml
 **/crontabs.yaml
 **/vars.yaml
 /hosts.yaml
