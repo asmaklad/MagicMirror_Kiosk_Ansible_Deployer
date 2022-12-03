@@ -20,10 +20,10 @@
   - [To upgrade magicmirrors:](#to-upgrade-magicmirrors)
   - [To install the magic mirror only on one host](#to-install-the-magic-mirror-only-on-one-host)
   - [To delete the magic mirror onyl on one host](#to-delete-the-magic-mirror-onyl-on-one-host)
-  - [Integrate two methods of installtion as mentioned in the Magic Mirror documentation:](#integrate-two-methods-of-installtion-as-mentioned-in-the-magic-mirror-documentation)
+- [Integrate two methods of installtion as mentioned in the Magic Mirror documentation:](#integrate-two-methods-of-installtion-as-mentioned-in-the-magic-mirror-documentation)
   - [Auotmate the manual installation method](#auotmate-the-manual-installation-method)
-    - [Use the scripted approach:](#use-the-scripted-approach)
-    - [Upgrade Magic Mirror:](#upgrade-magic-mirror)
+- [Use the scripted approach:](#use-the-scripted-approach)
+- [Upgrade Magic Mirror:](#upgrade-magic-mirror)
 
 <!-- /code_chunk_output -->
 
@@ -206,13 +206,13 @@ OR
 
 > You have to readjust the hosts.yaml file and remove that host for the "magicmirror" group
 
-## Integrate two methods of installtion as mentioned in the Magic Mirror documentation:
+# Integrate two methods of installtion as mentioned in the Magic Mirror documentation:
 
 ## Auotmate the manual installation method
 https://docs.magicmirror.builders/getting-started/installation.html#manual-installation
 
-### Use the scripted approach:
+# Use the scripted approach:
 https://github.com/sdetweil/MagicMirror_scripts
 
-### Upgrade Magic Mirror:
+# Upgrade Magic Mirror:
    1) https://github.com/sdetweil/MagicMirror_scripts
