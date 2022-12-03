@@ -4,3 +4,9 @@
 **/vars.yaml
 /hosts.yaml
 /host_vars/magicmirror-living.local/vault.yaml
+/roles/magicmirror/files/sounds/495dea4f4ea5.mp3
+/roles/magicmirror/files/sounds/mixkit-alarm-tone-996.wav
+/roles/magicmirror/files/sounds/mixkit-long-clock-gong-1067.wav
+/roles/magicmirror/files/sounds/mixkit-racing-countdown-timer-1051.wav
+/roles/magicmirror/files/sounds/mixkit-rooster-crowing-in-the-morning-2462.wav
+/roles/magicmirror/files/sounds/mixkit-slow-racing-countdown-1055.wav
