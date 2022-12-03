@@ -158,7 +158,7 @@ roles/
 ```
 
 # Where to start:
-  Start by adjusting the following files for your needs:
+  Start by adjusting the following files for your needs: (also rename the .yaml.sample to .yaml)
   1) hosts.yaml : this is your inventory file, describe here the ip's of you magicmirror and kiosk hosts.
   1) /host_vars/<host_name_from the inventory file>/modules.yaml : Adjust the list of MagicMirror modules you want to install
   1) /host_vars/<host_name_from the inventory file>/vault.yaml : Adjust the secrets, like your iCal link, openweathermap API key ..etc, prefix your variables with a "vault_" prefix <code>vault_var123: mySecretStringOrObject</code>.
