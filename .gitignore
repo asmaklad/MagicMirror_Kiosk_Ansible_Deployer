@@ -3,6 +3,4 @@
 **/crontabs.yaml
 **/vars.yaml
 /hosts.yaml
-host_vars/
-group_vars/
 /roles/magicmirror/files/sounds/
