@@ -3,6 +3,7 @@
 **/crontabs.yaml
 **/vars.yaml
 /hosts.yaml
+*host_vars*
 /host_vars/magicmirror-living.local/vault.yaml
 /roles/magicmirror/files/sounds/495dea4f4ea5.mp3
 /roles/magicmirror/files/sounds/mixkit-alarm-tone-996.wav
