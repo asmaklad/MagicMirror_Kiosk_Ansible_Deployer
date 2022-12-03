@@ -1,0 +1,162 @@
+---
+
+modules:
+- name: alert
+- name: updatenotification
+  position: top_bar
+- name: clock
+  position: top_center
+  config:
+    showWeek: true
+    showSunTimes: true
+    showMoonTimes: true
+    displaySeconds: true
+    clockBold: true
+    displayType: "digital"
+    lat: "{{location.lat}}"
+    lon: "{{location.lon}}"
+    dateFormat: "dddd, DD-MM-YYYY"
+- name: weather
+  position: top_left
+  header: Weather Forecast
+  config:
+    weatherProvider: "openweathermap"
+    units: "metric"
+    apiKey: "{{openweathermap.apiKey}}"
+    location: "{{location.name}}"
+    locationID: "{{location.locationID}}"
+    timeFormat: 24
+    type: "current"
+    lat: "{{location.lat}}"
+    lon: "{{location.lon}}"
+- name: calendar
+  position: top_left
+  header: Family Calendar
+  config:
+    maxTitleLength: 25
+    wrapEvents: true
+    fade: false
+    hideOngoing: false
+    maximumNumberOfDays: 90
+    displaySymbol: true
+    calendars:
+    - symbol: calendar-check-o
+      name: "MAMA"
+      color: "red"
+      url: "{{calendar_1_url}}"
+    - symbol: user-circle
+      name: "PAPA"
+      color: "blue"
+      url: "{{calendar_2_url}}"
+    - symbol: user-circle-o
+      name: "SWISS"
+      color: "green"
+      url: 'https://www.officeholidays.com/ics-clean/switzerland/bern'
+    - symbol: plane
+      name: "EGYPT"
+      color: "yellow"
+      url: 'https://www.officeholidays.com/ics/egypt'
+- name: weather
+  position: top_right
+  config:
+    weatherProvider: "openweathermap"
+    units: "metric"
+    apiKey: "{{openweathermap.apiKey}}"
+    location: "{{location.name}}"
+    locationID: "{{location.locationID}}"
+    timeFormat: 24
+    maxNumberOfDays: 10
+    type: "daily"
+    lat: "{{location.lat}}"
+    lon: "{{location.lon}}"
+    fade: false
+    showPrecipitationAmount: true
+    lang: "en"
+#- name: newsfeed
+#  position: bottom_bar
+#  config:
+#    feeds:
+#    - title: New York Times
+#      url: https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml
+#    showSourceTitle: true
+#    showPublishDate: true
+#    broadcastNewsFeeds: true
+#    broadcastNewsUpdates: true
+- name: MMM-PrayerTime
+  displayName: Prayer Times
+  github: https://github.com/slametps/MMM-PrayerTime.git
+  position: top_right
+  config:
+    apiVersion: '1.0'
+    lat: "{{location.lat}}"
+    lon: "{{location.lon}}"
+    timezone: "{{location.timezone}}"
+    timeFormat: 24
+    method: 2
+    playAdzan: ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha']
+    notDisplayed: ['midnight', 'sunset','imsak']
+    useUpdateInterval: true
+    updateInterval: 86400000
+    animationSpeed: 2500
+    language: "en"
+    showAdzanAlert: true
+    vertical: true
+    alertTimer: 15000
+    telegramAlert: [ true, [["{{telegram.telecast}}", "{{telegram.adminChatId}}"], "{{telegram.telegramAPIKey}}" ]]
+#- name: MMM-CountEvents
+#  displayName: Events Count down
+#  github: https://github.com/MMRIZE/MMM-CountEvents.git
+#  position: top_center
+#  config:
+#    refreshInterval: 1000*1
+#    locale: null
+#    events:
+#      - {
+#          title: "Event 1<br>Address",
+#          targetTime: "2022-10-18",
+#          yearlyRepeat: false,
+#          unit: "days",
+#          humanize: true,
+#          output: "D - %RESULT%"
+#        }
+- name: MMM-TelegramBot
+  position: top_center
+  github: https://github.com/bugsounet/MMM-TelegramBot.git
+  config:
+    telegramAPIKey : "{{telegram.telegramAPIKey}}"
+    allowedUser :
+      "{{telegram.allowedUser}}"
+    adminChatId : "{{telegram.adminChatId}}"
+    telecast: "{{telegram.telecast}}"
+- name: MMM-Remote-Control
+  position: bottom_center
+  github: https://github.com/Jopyth/MMM-Remote-Control.git
+  config:
+    showModuleApiMenu: true
+    secureEndpoints: true
+- name: MMM-FlightRadarTracker
+  position: top_center
+  github: https://github.com/jesmak/MMM-FlightRadarTracker.git
+  header: 'Nearby planes'
+  config:
+    updateInterval: 900
+    distance: 10
+    passingByThreshold: -1
+    limit: 5
+    speedUnits: 'metric'
+    altitudeUnits: 'metric'
+    centerPoint: ["{{location.lat}}","{{location.lon}}"]
+    showAirline: true
+    showType: true
+    showSpeed: true
+    showAltitude: true
+    showHeading: true
+    showDirectionAsArrow: true
+    showRoute: true
+    sort: 'distance'
+    sortDescending: false
+- name: MMM-ModuleScheduler
+  position: center_right
+  github: https://github.com/ianperrin/MMM-ModuleScheduler.git
+
+
