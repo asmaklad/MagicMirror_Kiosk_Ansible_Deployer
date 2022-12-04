@@ -24,3 +24,15 @@
       src:  files/kiosk.service
       dest: /lib/systemd/system/kiosk.service
       mode: u=rx,g=rx,o=-rx
+
+  - name: Create sounds Directory
+    file:
+      path: "~/sounds"
+      state: directory
+      mode: u=rwx,g=rx,o=rx
+
+  - name: copy sounds Directory
+    copy:
+      src: './files/sounds/'
+      dest: "~/sounds"
+      mode: u=rwx,g=rx,o=rx
