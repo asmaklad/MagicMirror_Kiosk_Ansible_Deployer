@@ -3,4 +3,6 @@
 **/crontabs.yaml
 **/vars.yaml
 /hosts.yaml
-/roles/magicmirror/files/sounds/
+/roles/**/files/sounds/*
+!/roles/**/files/sounds/mixkit-short-rooster-crowing-2470.wav
+!/roles/**/files/sounds/mixkit-classic-clock-gong-1066.wav

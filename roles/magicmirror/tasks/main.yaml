@@ -26,7 +26,8 @@
 - name: install mm if mm_root doesnt exists and even if no MM_install tag
   set_fact:
     run_option: "MM_install"
-  when: not mm_root_exists.stat.exists
+  when:
+    - not mm_root_exists.stat.exists
   tags: always
 
 - name: evaluate run_option upgrade
@@ -70,7 +71,7 @@
 
 - name: Reboot message
   debug:
-    msg: "You Should manually Reboot"
+    msg: "You should propably manually Reboot now!"
   tags:
   - always
 

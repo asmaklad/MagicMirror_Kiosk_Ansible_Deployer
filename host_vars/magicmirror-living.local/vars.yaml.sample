@@ -1,3 +1,7 @@
+# in older RPI OS , there used to be a program called omxplayer to play mp3 and wav files
+# it is not there anymore, and some of my modules used it, so I had to replace it with a shellscript
+omx_patch: False
+
 calendar_1_url: "{{vault_calendar_1_url}}"
 calendar_2_url: "{{vault_calendar_2_url}}"
 openweathermap: "{{vault_openweathermap}}"

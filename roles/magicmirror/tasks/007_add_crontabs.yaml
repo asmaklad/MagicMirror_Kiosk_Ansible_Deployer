@@ -1,5 +1,25 @@
 ---
-  - name: host specific cronjobs
+# DELETE First
+  - name: delete host specific cronjobs
+    ansible.builtin.cron:
+      "{{item | combine ({'state' : 'absent'}) }}"
+    loop:
+      "{{ hostc.crontabs }}"
+    when:
+      - hostc is defined
+      - hostc.crontabs is defined
+
+  - name: delete group specific cronjobs
+    # source ./group_vars/<groupname>/crontabs.yaml
+    ansible.builtin.cron:
+      "{{item | combine ({'state' : 'absent'}) }}"
+    with_items: "{{ group.crontabs }}"
+    when:
+      - group is defined
+      - group.crontabs is defined
+
+# ADD Second
+  - name: add host specific cronjobs
     # source ./hosts_vars/<hostname>/crontabs.yaml
     ansible.builtin.cron:
       "{{item}}"
@@ -9,7 +29,7 @@
       - hostc is defined
       - hostc.crontabs is defined
 
-  - name: group specific cronjobs
+  - name: add group specific cronjobs
     # source ./group_vars/<groupname>/crontabs.yaml
     ansible.builtin.cron:
       "{{item}}"

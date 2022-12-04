@@ -11,7 +11,7 @@ hostc:
       user: pi
       minute: "30"
       hour: "6-9"
-      job: "aplay {{ mm_root }}/sounds/mixkit-classic-clock-gong-1066.wav"  
+      job: "aplay {{ mm_root }}/sounds/mixkit-classic-clock-gong-1066.wav"
     - name: "Night Volume Mode"
       user: pi
       minute: "0"

@@ -10,6 +10,10 @@
       src: './files/omxplayer.sh'
       dest: /usr/bin/omxplayer
       mode: u=rx,g=rx,o=rx
+    when:
+      # same as omx_patch is defined and omx_patch == True
+      # same as omx_patch|default(False) == True
+      - omx_patch|d(False) == True
 
   - name: Magic Mirror Config.js
     template:

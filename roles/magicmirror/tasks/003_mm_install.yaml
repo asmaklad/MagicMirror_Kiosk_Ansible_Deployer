@@ -28,9 +28,10 @@
     npm:
       path: "{{ mm_root }}/install-mm"
 
-  - name: Install MagicMirror scripted
-    shell:
-      cmd: bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/raspberry.sh)"
+  # this has prompts which reauires manual entry during running, this doesn't play well with ansible
+  #- name: Install MagicMirror scripted
+  #  shell:
+  #    cmd: bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/raspberry.sh)"
 
   - name: Turn off screen saver
     shell:
