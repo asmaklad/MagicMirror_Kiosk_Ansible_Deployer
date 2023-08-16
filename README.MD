@@ -20,7 +20,7 @@
   - [To upgrade magicmirrors:](#to-upgrade-magicmirrors)
   - [To install the magic mirror only on one host](#to-install-the-magic-mirror-only-on-one-host)
   - [To delete the magic mirror only on one host](#to-delete-the-magic-mirror-only-on-one-host)
-- [Integrate two methods of installtion as mentioned in the Magic Mirror documentation:](#integrate-two-methods-of-installtion-as-mentioned-in-the-magic-mirror-documentation)
+- [Appendix: Integrate two methods of installtion as mentioned in the Magic Mirror documentation:](#appendix-integrate-two-methods-of-installtion-as-mentioned-in-the-magic-mirror-documentation)
   - [Auotmate the manual installation method](#auotmate-the-manual-installation-method)
 - [Use the scripted approach:](#use-the-scripted-approach)
 - [Upgrade Magic Mirror:](#upgrade-magic-mirror)
@@ -28,7 +28,12 @@
 <!-- /code_chunk_output -->
 
 # Introduction
-This project is based on the work in here: https://github.com/anlai/MagicMirror-Ansible.git
+This project is an Ansible playbook that installs magicmirror(s) and kiosk mode on RPI .
+It helps automate the installationa ,maintenance and magicmirror Module managment.
+The kiosk mode is simply a RPI in GUI mode running chromium  in full screen and switching periodically between the opened tabs.
+You could define the urls per tab and this could help as an information radiator.
+
+It is based on the work in here: https://github.com/anlai/MagicMirror-Ansible.git
 
 It adds the following features:
 1) Reorganize the folders to match the best practices from Ansible as mentioned here :
@@ -218,12 +223,12 @@ ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.lo
 ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.local --tags "MM_delete"
 </code>
  
- 
+
 > Please notice, that this delete procedure is not yet clean, it needs more work. (please be my guest in finalizing it or just reformat the SD card)
 
 > You have to readjust the hosts.yaml file and remove that host from the "magicmirror" group
 
-# Integrate two methods of installtion as mentioned in the Magic Mirror documentation:
+# Appendix: Integrate two methods of installtion as mentioned in the Magic Mirror documentation:
 
 ## Auotmate the manual installation method
 https://docs.magicmirror.builders/getting-started/installation.html#manual-installation
