@@ -8,7 +8,8 @@ urls:
 - https://outlook.office.com/calendar/view/week
 
 # duration between each flip
-sleep_duration: 15
+switch_tab_duration: 15
+refresh_tab_duration: 240
 
 kiosk_workshop: "{{vault_kiosk_workshop}}"
 ansible_user: "{{vault_kiosk_workshop.ansible_user}}"

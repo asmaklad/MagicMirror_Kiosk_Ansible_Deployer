@@ -25,4 +25,7 @@
     notify:
       - restart MM
 
-
+  - name: check config.js files
+    command:
+      chdir: "{{ mm_root }}/config"
+      cmd: npm run config:check

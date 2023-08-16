@@ -19,7 +19,7 @@
   - [To install all kiosks:](#to-install-all-kiosks)
   - [To upgrade magicmirrors:](#to-upgrade-magicmirrors)
   - [To install the magic mirror only on one host](#to-install-the-magic-mirror-only-on-one-host)
-  - [To delete the magic mirror onyl on one host](#to-delete-the-magic-mirror-onyl-on-one-host)
+  - [To delete the magic mirror only on one host](#to-delete-the-magic-mirror-only-on-one-host)
 - [Integrate two methods of installtion as mentioned in the Magic Mirror documentation:](#integrate-two-methods-of-installtion-as-mentioned-in-the-magic-mirror-documentation)
   - [Auotmate the manual installation method](#auotmate-the-manual-installation-method)
 - [Use the scripted approach:](#use-the-scripted-approach)
@@ -179,31 +179,46 @@ roles/
 > if ~/MagicMirror doesn't already exists, it will be install first. (implicit MM_install)
 
 > if kiosk.service file is not found in its place, the K_install will be implicitly invoked.
-> 
+
 <code>ansible-playbook site.yaml -i hosts.yaml </code>
 
 ### To install all magicmirrors:
-<code>ansible-playbook site.yaml        -i hosts.yaml --limit magicmirrors --tags "MM_install"</code>
+<code>
+ansible-playbook site.yaml        -i hosts.yaml --limit magicmirrors --tags "MM_install"
+</code>
+
 OR
-<code>ansible-playbook magicmirror.yaml -i hosts.yaml --limit magicmirror --tags "MM_install"    </code>
+
+<code>
+ansible-playbook magicmirror.yaml -i hosts.yaml --limit magicmirror --tags "MM_install"
+</code>
 
 ## To install all kiosks:
 <code>ansible-playbook site.yaml -i hosts.yaml --limit kiosk --tags "K_install"</code>
 
 
 ## To upgrade magicmirrors:
-<code>ansible-playbook site.yaml -i hosts.yaml --limit magicmirrors --tags "MM_upgrade"</code>
-
-OR
-
-<code>ansible-playbook magicmirror.yaml -i hosts.yaml --tags "MM_upgrade"</code>
+<code>
+ansible-playbook site.yaml -i hosts.yaml --limit magicmirrors --tags "MM_upgrade"
+</code>
+<pre> 
+OR 
+</pre>
+<code>
+ansible-playbook magicmirror.yaml -i hosts.yaml --tags "MM_upgrade"
+</code>
 
 ## To install the magic mirror only on one host
-<code>ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.local --tags "MM_install"</code>
+<code>
+ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.local --tags "MM_install"
+</code>
 
-## To delete the magic mirror onyl on one host
-<code>ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.local --tags "MM_delete"</code>
-
+## To delete the magic mirror only on one host
+<code>
+ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.local --tags "MM_delete"
+</code>
+ 
+ 
 > Please notice, that this delete procedure is not yet clean, it needs more work. (please be my guest in finalizing it or just reformat the SD card)
 
 > You have to readjust the hosts.yaml file and remove that host from the "magicmirror" group

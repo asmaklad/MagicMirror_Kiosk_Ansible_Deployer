@@ -21,13 +21,15 @@ sed -i 's/"exit_type":"Crashed"/"exit_type":"Normal"/' /home/$USER/.config/chrom
 {% endfor %}
 &
 
+#refresh rotation
 while true; do
       xdotool keydown ctrl+r; xdotool keyup ctrl+r;
-      sleep 240
+      sleep {{refresh_tab_duration}}
 done &
 
+#tab switch rotation
 while true; do
       xdotool keydown ctrl+Next; xdotool keyup ctrl+Next;
-      sleep {{sleep_duration}}
+      sleep {{switch_tab_duration}}
 done
 

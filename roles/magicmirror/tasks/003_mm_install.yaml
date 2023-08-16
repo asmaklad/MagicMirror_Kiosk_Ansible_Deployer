@@ -28,6 +28,18 @@
     npm:
       path: "{{ mm_root }}/install-mm"
 
+  - name: update npm
+    become: true
+    command:
+      chdir: "{{ mm_root }}"
+      cmd: npm install pm2 -g && pm2 update
+
+  - name: install npm auto-complete
+    become: true
+    command:
+      chdir: "{{ mm_root }}"
+      cmd: pm2 completion install
+
   # this has prompts which reauires manual entry during running, this doesn't play well with ansible
   #- name: Install MagicMirror scripted
   #  shell:
