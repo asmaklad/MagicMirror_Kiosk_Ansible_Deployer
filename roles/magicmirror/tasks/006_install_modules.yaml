@@ -20,6 +20,16 @@
       src: './templates/config.js.j2'
       dest: "{{ mm_root }}/config/config.js"
 
+  - name: Telegrambot API key
+    template:
+      src: './templates/.env.j2'
+      dest: "{{ mm_root }}/modules/MMM-TelegramBot/.env"
+
+  - name: butify config.js
+    command:
+      chdir: "{{ mm_root }}"
+      cmd: js-beautify  -r "{{ mm_root }}/config/config.js"
+    
   - name: check config.js file
     shell: "cd {{ mm_root }} && npm run config:check"
     notify:

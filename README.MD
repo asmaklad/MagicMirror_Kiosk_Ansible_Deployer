@@ -28,7 +28,7 @@
 <!-- /code_chunk_output -->
 
 # Introduction
-This project is an Ansible playbook that installs magicmirror(s) and kiosk mode on RPI .
+This project is an Ansible playbook that installs magicmirror(s) https://magicmirror.builders/ and kiosk mode on RPI .
 It helps automate the installationa ,maintenance and magicmirror Module managment.
 The kiosk mode is simply a RPI in GUI mode running chromium  in full screen and switching periodically between the opened tabs.
 You could define the urls per tab and this could help as an information radiator.
@@ -176,6 +176,16 @@ roles/
 > Please note all these files are added to .gitignore so they are not checking into github.
 # Running the playbooks
 
+# You dont have to install Ansible to run thos workbooks:
+
+You could simply use and asnible container image:
+<code>
+  cd [cloned_path]
+  docker run -ti --rm  -v .:/apps -w /apps alpine/ansible bash
+  OR
+  podman run -ti --rm  -v .:/apps -w /apps alpine/ansible bash
+</code>
+
 ## Calling adhoc modules (to test connectivity)
 * <code>ansible magicmirror -i hosts.yaml  -m ping</code>
 * <code>ansible magicmirror -i hosts.yaml  -m command -a '/sbin/reboot'</code>
@@ -189,7 +199,7 @@ roles/
 
 ### To install all magicmirrors:
 <code>
-ansible-playbook site.yaml        -i hosts.yaml --limit magicmirrors --tags "MM_install"
+ansible-playbook site.yaml -i hosts.yaml --limit magicmirrors --tags "MM_install"
 </code>
 
 OR
@@ -226,7 +236,7 @@ ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.lo
 
 > Please notice, that this delete procedure is not yet clean, it needs more work. (please be my guest in finalizing it or just reformat the SD card)
 
-> You have to readjust the hosts.yaml file and remove that host from the "magicmirror" group
+> You have to read just the hosts.yaml file and remove that host from the "magicmirror" group
 
 # Appendix: Integrate two methods of installtion as mentioned in the Magic Mirror documentation:
 

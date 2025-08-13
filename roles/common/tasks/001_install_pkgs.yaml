@@ -44,3 +44,4 @@
         - sshpass
         - mpg321
         - alsa-utils
+        - mpg321

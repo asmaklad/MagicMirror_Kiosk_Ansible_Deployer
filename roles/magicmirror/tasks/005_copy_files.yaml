@@ -8,6 +8,7 @@
       - 'alias checkMM="pushd {{mm_root}} && npm run config:check && popd"'
       - 'alias infoMM="pm2 info MagicMirror"'
       - 'alias logMM="pm2 logs MagicMirror"'
+      - 'alias restartMM="pm2 restart MagicMirror"'
       - 'alias statMM="pm2 status"'
       - 'alias envMM="pm2 env 0"'
 

@@ -39,6 +39,10 @@ var config = {
 	// false, default for all NON-armv6l devices
 	// true, force serveronly mode, because you want to.. no UI on this device
 
+	groupOrder: ["Birthday", "Moving"],
+  	groupInterval: 1000*5,
+  	refreshInterval:1000*1,
+
 	modules: [
 {% for module in modules %}
 		{

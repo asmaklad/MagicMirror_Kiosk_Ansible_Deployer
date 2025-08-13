@@ -1,7 +1,7 @@
 ---
   - name: add node repo
     shell:
-      cmd: curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
+      cmd: curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash - 
 
   - name: install node
     become: true
@@ -28,13 +28,25 @@
     npm:
       path: "{{ mm_root }}/install-mm"
 
-  - name: update npm
+  - name: Install "js-beautify" node.js package globally.
+    become: true
+    community.general.npm:
+      name: js-beautify
+      global: true
+
+  - name: install pm2
     become: true
     command:
       chdir: "{{ mm_root }}"
-      cmd: npm install pm2 -g && pm2 update
+      cmd: npm install pm2 -g 
+  
+  - name: update pm2
+    become: true
+    command:
+      chdir: "{{ mm_root }}"
+      cmd: pm2 update
 
-  - name: install npm auto-complete
+  - name: install pm2 auto-complete
     become: true
     command:
       chdir: "{{ mm_root }}"

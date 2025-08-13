@@ -5,6 +5,12 @@
       name: MagicMirror
       state: absent
 
+  - name: npm uninstall js-beautify
+    npm:
+      path: "{{ mm_root }}"
+      name: js-beautify
+      state: absent
+
   - name: Delete magicMirror, if exists
     command:
       cmd: pm2 remove MagicMirror
