@@ -184,6 +184,32 @@ You could simply use and asnible container image:
   docker run -ti --rm  -v .:/apps -w /apps alpine/ansible bash
   OR
   podman run -ti --rm  -v .:/apps -w /apps alpine/ansible bash
+
+  #rememebr to add the ssh signature to the container after you login
+  dc9bf0de03ab:/apps# ssh pi@192.168.68.72
+  The authenticity of host '192.168.68.72 (192.168.68.72)' can't be established.
+  ED25519 key fingerprint is SHA256:Wjdwb/MbNlmEUq6VPvJOdqHmmDQEZOUOujHSzaWD6kg.
+  This key is not known by any other names.
+  Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+  Warning: Permanently added '192.168.68.72' (ED25519) to the list of known hosts.
+  pi@192.168.68.72's password:
+  Linux magicmirror 6.12.34+rpt-rpi-v7 #1 SMP Raspbian 1:6.12.34-1+rpt1~bookworm (2025-06-26) armv7l
+
+  The programs included with the Debian GNU/Linux system are free software;
+  the exact distribution terms for each program are described in the
+  individual files in /usr/share/doc/*/copyright.
+
+  Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
+  permitted by applicable law.
+  Last login: Sun Aug 31 00:02:55 2025
+
+  # To fix that:
+  # add the hosts targets to your /etc/hosts file and 
+  # if needed generate the an ssh key
+  mkdir /etc/ansible
+  cp ansible.cfg /etc/ansible/ansible.cfg
+  ssh-copy-id -i ~/.ssh/id_ed25519.pub pi@magicmirror.local
+
 </code>
 
 ## Calling adhoc modules (to test connectivity)
@@ -199,7 +225,7 @@ You could simply use and asnible container image:
 
 ### To install all magicmirrors:
 <code>
-ansible-playbook site.yaml -i hosts.yaml --limit magicmirrors --tags "MM_install"
+ansible-playbook site.yaml -i hosts.yaml --limit magicmirror --tags "MM_install"
 </code>
 
 OR

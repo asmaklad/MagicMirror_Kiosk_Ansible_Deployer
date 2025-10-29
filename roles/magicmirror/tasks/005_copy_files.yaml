@@ -12,6 +12,12 @@
       - 'alias statMM="pm2 status"'
       - 'alias envMM="pm2 env 0"'
 
+  - name: Create CSS Directory
+    file:
+      path: "{{ mm_root }}/css"
+      state: directory
+      mode: u=rwx,g=rx,o=rx
+
   - name: copy custom.css
     copy:
       src: './files/custom.css'

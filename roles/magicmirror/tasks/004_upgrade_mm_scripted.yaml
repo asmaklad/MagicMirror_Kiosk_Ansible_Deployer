@@ -2,3 +2,4 @@
   - name: apply upgrade MagicMirror
     shell:
       cmd: bash -c  "$(curl -sL https://raw.githubusercontent.com/sdetweil/MagicMirror_scripts/master/upgrade-script.sh)" apply
+    ignore_errors: true

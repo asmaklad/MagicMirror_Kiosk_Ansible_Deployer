@@ -18,4 +18,5 @@
       name: hciuart
       enabled: no
       state: stopped
+    ignore_errors: true
 

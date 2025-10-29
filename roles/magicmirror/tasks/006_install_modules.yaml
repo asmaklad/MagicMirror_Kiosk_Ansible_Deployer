@@ -15,6 +15,12 @@
       # same as omx_patch|default(False) == True
       - omx_patch|d(False) == True
 
+  - name: Create config Directory
+    file:
+      path: "{{ mm_root }}/config"
+      state: directory
+      mode: u=rwx,g=rx,o=rx
+
   - name: Magic Mirror Config.js
     template:
       src: './templates/config.js.j2'
@@ -25,6 +31,12 @@
       src: './templates/.env.j2'
       dest: "{{ mm_root }}/modules/MMM-TelegramBot/.env"
 
+  - name: Install "js-beautify" node.js package globally.
+    become: true
+    community.general.npm:
+      name: js-beautify
+      global: true
+    
   - name: butify config.js
     command:
       chdir: "{{ mm_root }}"
