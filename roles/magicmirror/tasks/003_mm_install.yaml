@@ -1,7 +1,8 @@
 ---
   - name: add node repo
+    become: true
     shell:
-      cmd: curl -fsSL https://deb.nodesource.com/setup_22.x | sudo bash - 
+      cmd: curl -fsSL https://deb.nodesource.com/setup_24.x | sudo bash - 
 
   - name: install node
     become: true

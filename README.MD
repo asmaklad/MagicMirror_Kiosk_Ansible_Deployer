@@ -176,16 +176,35 @@ roles/
 > Please note all these files are added to .gitignore so they are not checking into github.
 # Running the playbooks
 
-# You dont have to install Ansible to run thos workbooks:
+# for fater SSH login:
+Use the ssh keys instead of user/pass
+
+## for windows:
+```
+ssh-keygen -t ed25519 -C "pi@ansible.script"
+type "%USERPROFILE%\.ssh\id_ed25519.pub" | ssh pi@magicmirror.local "cat >> .ssh/authorized_keys"
+```
+
+## for linux:
+```
+ssh-keygen -t ed25519 -C "pi@ansible.script"
+sudo apt install sshpass
+ssh-copy-id -i ~/.ssh/id_ed25519.pub pi@magicmirror.local
+```
+
+
+# You dont have to install Ansible to run those workbooks:
 
 You could simply use and asnible container image:
-<code>
+```
   cd [cloned_path]
   docker run -ti --rm  -v .:/apps -w /apps alpine/ansible bash
   OR
   podman run -ti --rm  -v .:/apps -w /apps alpine/ansible bash
+```
 
-  #rememebr to add the ssh signature to the container after you login
+Rememebr to add the ssh signature to the container after you login:
+```
   dc9bf0de03ab:/apps# ssh pi@192.168.68.72
   The authenticity of host '192.168.68.72 (192.168.68.72)' can't be established.
   ED25519 key fingerprint is SHA256:Wjdwb/MbNlmEUq6VPvJOdqHmmDQEZOUOujHSzaWD6kg.
@@ -202,15 +221,34 @@ You could simply use and asnible container image:
   Debian GNU/Linux comes with ABSOLUTELY NO WARRANTY, to the extent
   permitted by applicable law.
   Last login: Sun Aug 31 00:02:55 2025
+```
 
-  # To fix that:
-  # add the hosts targets to your /etc/hosts file and 
-  # if needed generate the an ssh key
+## to find out the IP of the PI:
+login to the PI and issue the command:
+```
+ip addr
+
+```
+
+## To fix that:
+add the hosts targets to your /etc/hosts file and 
+if needed generate the ssh key on the ansible container.
+```
   mkdir /etc/ansible
   cp ansible.cfg /etc/ansible/ansible.cfg
+
+  ssh-keygen -t ed25519 -C "pi@ansible.script"
+  # answer with Enter for all the questions.
+
+  # add the magicmirror IP to the local /etc/hosts file
+  echo "192.168.68.72 magicmirror.local" >> /etc/hosts
+
+  # in case you need it:
+  sudo apt install sshpass
+
   ssh-copy-id -i ~/.ssh/id_ed25519.pub pi@magicmirror.local
 
-</code>
+```
 
 ## Calling adhoc modules (to test connectivity)
 * <code>ansible magicmirror -i hosts.yaml  -m ping</code>
@@ -224,30 +262,23 @@ You could simply use and asnible container image:
 <code>ansible-playbook site.yaml -i hosts.yaml </code>
 
 ### To install all magicmirrors:
-<code>
-ansible-playbook site.yaml -i hosts.yaml --limit magicmirror --tags "MM_install"
-</code>
+
+<code>ansible-playbook site.yaml -i hosts.yaml  --ask-become-pass  --limit magicmirror --tags "MM_install"</code>
 
 OR
 
-<code>
-ansible-playbook magicmirror.yaml -i hosts.yaml --limit magicmirror --tags "MM_install"
-</code>
+<code>ansible-playbook magicmirror.yaml -i hosts.yaml  --ask-become-pass  --limit magicmirror --tags "MM_install"</code>
 
 ## To install all kiosks:
 <code>ansible-playbook site.yaml -i hosts.yaml --limit kiosk --tags "K_install"</code>
 
 
 ## To upgrade magicmirrors:
-<code>
-ansible-playbook site.yaml -i hosts.yaml --limit magicmirrors --tags "MM_upgrade"
-</code>
-<pre> 
+<code>ansible-playbook site.yaml -i hosts.yaml --limit magicmirrors --tags "MM_upgrade"</code>
+
 OR 
-</pre>
-<code>
-ansible-playbook magicmirror.yaml -i hosts.yaml --tags "MM_upgrade"
-</code>
+
+<code>ansible-playbook magicmirror.yaml -i hosts.yaml --tags "MM_upgrade"</code>
 
 ## To install the magic mirror only on one host
 <code>
@@ -255,9 +286,7 @@ ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.lo
 </code>
 
 ## To delete the magic mirror only on one host
-<code>
-ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.local --tags "MM_delete"
-</code>
+<code>ansible-playbook magicmirror.yaml -i hosts.yaml  --limit magicmirror-workshop.local --tags "MM_delete"</code>
  
 
 > Please notice, that this delete procedure is not yet clean, it needs more work. (please be my guest in finalizing it or just reformat the SD card)
