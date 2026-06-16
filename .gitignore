@@ -2,6 +2,7 @@
 **/modules.yaml
 **/crontabs.yaml
 **/vars.yaml
+**/*.bak
 /hosts.yaml
 /roles/**/files/sounds/*
 !/roles/**/files/sounds/mixkit-short-rooster-crowing-2470.wav
